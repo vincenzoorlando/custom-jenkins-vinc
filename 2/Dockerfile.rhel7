@@ -44,7 +44,7 @@ RUN \
     # will subsequently get redirected to /usr/lib/jenkins; it is confirmed that the 3.7 jenkins RHEL images do *NOT* have a /usr/lib64/jenkins path
 RUN \
     ln -s /usr/lib/jenkins /usr/lib64/jenkins && \
-    # yum -y update && \
+    yum -y update && \
     #run yum update to avoid package version mismatch between i686 and other archs
     x86_EXTRA_RPMS=$(if [ "$(uname -m)" == "x86_64" ]; then echo -n java-11-openjdk.i686 java-11-openjdk-devel.i686 ; fi) && \
     INSTALL_PKGS="dejavu-sans-fonts wget rsync gettext git tar zip unzip openssl bzip2 dumb-init  java-11-openjdk java-11-openjdk-devel atomic-openshift-clients jenkins-2.* jenkins-2-plugins nss_wrapper" && \
