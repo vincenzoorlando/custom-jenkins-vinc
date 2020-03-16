@@ -36,7 +36,6 @@ LABEL com.redhat.component="openshift-jenkins-2-container" \
 EXPOSE 8080 50000
 
 
-RUN subscription-manager register --username s.tiberia --password Simone.1 --auto-attach
 RUN \
     yum-config-manager --disable epel >/dev/null || : && \
     yum-config-manager --enable rhel-7-server-ose-onlineint-rpms || : && \
