@@ -35,11 +35,10 @@ LABEL com.redhat.component="openshift-jenkins-2-container" \
 # 8080 for main web interface, 50000 for slave agents
 EXPOSE 8080 50000
 
-RUN yum repolist --disablerepo=* && cat /etc/yum.repos.d/redhat.repo && \
+RUN yum repolist --disablerepo=*  && \
     yum-config-manager --disable \* > /dev/null && \
 #    yum-config-manager --enable rhel-7-server-ose-3.11-rpms --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms > /dev/null && \
-    yum-config-manager --enable rhel-7-server-ose-onlineint-rpms && \
-    cat /etc/yum.repos.d/redhat.repo
+    yum-config-manager --enable rhel-7-server-ose-onlineint-rpms --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms && \
 #    yum install git -y > /dev/null
 
 RUN \
