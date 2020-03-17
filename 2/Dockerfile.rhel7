@@ -37,8 +37,7 @@ EXPOSE 8080 50000
 
 RUN yum repolist --disablerepo=*  && \
     yum-config-manager --disable \* > /dev/null && \
-#    yum-config-manager --enable rhel-7-server-ose-3.11-rpms --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms > /dev/null && \
-    yum-config-manager --enable rhel-7-server-ose-onlineint-rpms --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms && \
+    yum-config-manager --enable rhel-7-server-ose-onlineint-rpms --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms > /dev/null
 #    yum install git -y > /dev/null
 
 RUN \
