@@ -35,9 +35,13 @@ LABEL com.redhat.component="openshift-jenkins-2-container" \
 # 8080 for main web interface, 50000 for slave agents
 EXPOSE 8080 50000
 
+RUN curl -o epel-release-latest-7.noarch.rpm -SL https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
+      --retry 5 --retry-max-time 0 -C - && \
+    yum -y localinstall epel-release-latest-7.noarch.rpm && rm epel-release-latest-7.noarch.rpm
+
 RUN yum repolist --disablerepo=*  && \
     yum-config-manager --disable \* > /dev/null && \
-    yum-config-manager --enable rhel-7-server-ose-onlineint-rpms --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms > /dev/null && \
+    yum-config-manager --enable rhel-7-server-ose-onlineint-rpms --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms --enable rhel-7-server-ose-3.11-rpms --enable epel > /dev/null
 #    yum install git -y > /dev/null
 
 RUN \
@@ -103,4 +107,4 @@ VOLUME ["/var/lib/jenkins"]
 USER 1001
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/usr/libexec/s2i/run"]
-LABEL io.openshift.builder-version="35d3f01"
+LABEL io.openshift.builder-version="c61c97d"
