@@ -42,18 +42,23 @@ RUN curl -o epel-release-latest-7.noarch.rpm -SL https://dl.fedoraproject.org/pu
 RUN yum repolist --disablerepo=*  && \
     yum-config-manager --disable \* > /dev/null && \
     yum-config-manager --enable rhel-7-server-ose-onlineint-rpms --enable rhel-7-server-rpms --enable rhel-7-server-extras-rpms --enable rhel-7-server-ose-3.11-rpms --enable epel > /dev/null
-#    yum install git -y > /dev/null
 
 RUN \
     ln -s /usr/lib/jenkins /usr/lib64/jenkins && \
     yum -y update && \
     #run yum update to avoid package version mismatch between i686 and other archs
     x86_EXTRA_RPMS=$(if [ "$(uname -m)" == "x86_64" ]; then echo -n java-11-openjdk.i686 java-11-openjdk-devel.i686 ; fi) && \
-    INSTALL_PKGS="dejavu-sans-fonts wget rsync gettext git tar zip unzip openssl bzip2 dumb-init  java-11-openjdk java-11-openjdk-devel atomic-openshift-clients jenkins-2.* jenkins-2-plugins nss_wrapper" && \
+    INSTALL_PKGS="dejavu-sans-fonts wget rsync gettext tar zip unzip openssl bzip2 dumb-init  java-11-openjdk java-11-openjdk-devel atomic-openshift-clients jenkins-2.* jenkins-2-plugins nss_wrapper" && \
     yum --setopt=protected_multilib=false -y install $INSTALL_PKGS $x86_EXTRA_RPMS && \
     rpm -V  $INSTALL_PKGS $x86_EXTRA_RPMS && \
     yum clean all  && \
     localedef -f UTF-8 -i en_US en_US.UTF-8
+
+RUN yum groups mark convert && yum groupinstall -y 'Development Tools' && \
+    yum install gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel -y && \
+    wget https://github.com/git/git/archive/v2.11.0.tar.gz > /dev/null && \
+    tar -xvf v2.11.0.tar.gz > /dev/null && cd git-*  && make configure && ./configure --prefix=/usr/local && make install \
+    git --version 
 
 COPY ./contrib/openshift /opt/openshift
 COPY ./contrib/jenkins /usr/local/bin

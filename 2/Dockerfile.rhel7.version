@@ -107,4 +107,4 @@ VOLUME ["/var/lib/jenkins"]
 USER 1001
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/usr/libexec/s2i/run"]
-LABEL io.openshift.builder-version="c61c97d"
+LABEL io.openshift.builder-version="15cc36c"
