@@ -65,7 +65,7 @@ ENV PATH="${GOROOT}/bin:${PATH}"
 RUN wget https://dl.google.com/go/go1.14.linux-amd64.tar.gz && tar -xzf go1.14.linux-amd64.tar.gz && mv go /usr/local && \
     go version 
 
-RUN git clone https://github.com/gohugoio/hugo.git && cd hugo && go install && hugo env
+RUN git clone https://github.com/gohugoio/hugo.git && cd hugo && go install
 
 COPY ./contrib/openshift /opt/openshift
 COPY ./contrib/jenkins /usr/local/bin
