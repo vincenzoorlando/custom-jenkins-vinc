@@ -57,8 +57,13 @@ RUN \
 RUN yum groups mark convert && yum groupinstall -y 'Development Tools' && \
     yum install gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel -y && \
     wget https://github.com/git/git/archive/v2.11.0.tar.gz > /dev/null && \
-    tar -xvf v2.11.0.tar.gz > /dev/null && cd git-*  && make configure && ./configure --prefix=/usr/local && make install \
-    git --version 
+    tar -xvf v2.11.0.tar.gz > /dev/null && cd git-*  && make configure && ./configure --prefix=/usr/local && make install && \
+    git --version
+
+ENV GOROOT=/usr/local/go
+ENV PATH="${GOROOT}/bin:${PATH}"
+RUN wget https://dl.google.com/go/go1.14.linux-amd64.tar.gz && tar -xzf go1.14.linux-amd64.tar.gz && mv go /usr/local && \
+    go version 
 
 COPY ./contrib/openshift /opt/openshift
 COPY ./contrib/jenkins /usr/local/bin
