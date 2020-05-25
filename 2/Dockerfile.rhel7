@@ -77,6 +77,8 @@ RUN set -ex \
   && hugo version
 #****************   END HUGO      *********************************************
 
+RUN yum install jq -y
+
 COPY ./contrib/openshift /opt/openshift
 COPY ./contrib/jenkins /usr/local/bin
 ADD ./contrib/s2i /usr/libexec/s2i
